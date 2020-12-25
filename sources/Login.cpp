@@ -1,237 +1,101 @@
-//
-// Created by Ehsan on 12/5/2020.
-//
-/*
-#include<iostream>
-#include<fstream>
-#include<string>
-
-
-using namespace std;
-
-bool IsLoggedIn()
-{
-    string username, password, un, pw;
-
-    cout<< "Enter username: "<<username<<endl;
-    cout<< "Enter password: "<<password<<endl;
-
-    ifstream read("C:\\"+username+".txt");
-    getline(read, un);
-    getline(read, pw);
-
-    if(un ==username && pw == password){
-        return true;
-    }
-    else
-        return false;
-}
-int Authentication_login()
-{
-    int choice;
-    cout << "1: Register\n2: Login\nYour choice: ";cin>>choice;
-    if(choice == 1)
-    {
-        string username, pasword;
-
-        cout<<"select a username: ";cin>>username;
-        cout<<"select a password: ";cin>>pasword;
-
-        ofstream file;
-        file.open("C:\\"+username+".txt");
-
-        file << username <<endl<<pasword;
-        file.close();
-        Authentication_login();
-    }
-    else if(choice==2)
-    {
-        bool status = IsLoggedIn();
-
-        if (!status)
-        {
-            cout<<"False login"<<endl;
-            system("pause");
-            return 0;
-        }
-        else
-        {
-            cout<<"Successfully logged in"<<endl;
-            system("pause");
-            return 1;
-        }
-    }
-}
-*/
-/*
-#include <iostream>
 #include <fstream>
-#include <sstream>
-#include <math.h>
+#include <iostream>
+#include <limits>
+#include <string>
 
-using namespace std;
+template <typename T>
+T get_input(const std::string& strQuery);
 
-class LoginManager
-{
-public:
+std::string get_username();
+std::string get_password();
+void save_user(const std::string& username, const std::string& password);
 
-    LoginManager()
-    {
-        accessGranted = 0;
-    }
-    void login()
-    {
-        cout << "Ahem. A username is required. \nUsername:";
-        cin >> userNameAttempt;
-
-        int usrID = checkFile(userNameAttempt, "C:\\Users\\Ehsan\\CLionProjects\\project\\sources\\users.dat");
-        if(usrID != 0)
-        {
-            cout << "Password:";
-            cin >> passwordAttempt;
-
-            int pwdID = checkFile(passwordAttempt, "C:\\Users\\Ehsan\\CLionProjects\\project\\sources\\pswds.dat");
-            if(usrID == pwdID)
-            {
-                cout << "Hey, thats right. \n" << endl;;
-                login();
-
-            }
-            else
-            {
-                cout << "Not even close." << endl;
-                login();
-            }
-        }
-        else
-        {
-            cout << "Nice try, bud." << endl;
-            login();
-        }
-    }
-
-    void addUser(const string username, const string password)
-    {
-        if(checkFile(username, "C:\\Users\\Ehsan\\CLionProjects\\project\\sources\\users.dat") != 0)
-        {
-            cout << "That username is not availble." << endl;
-            return;
-        }
-
-        int id = 1 + getLastID();
-        saveFile(username, "C:\\Users\\Ehsan\\CLionProjects\\project\\sources\\users.dat", id);
-        saveFile(password, "C:\\Users\\Ehsan\\CLionProjects\\project\\sources\\pswds.dat", id);
-    }
-
-    int getLastID()
-    {
-        fstream file;
-        file.open("C:\\Users\\Ehsan\\CLionProjects\\project\\sources\\users.dat", ios::in);
-        file.seekg(0, ios::end);
-
-        if(file.tellg() == -1)
-            return 0;
-
-        string s;
-
-        for(int i = -1; s.find("#") == string::npos; i--)
-        {
-            file.seekg(i, ios::end);
-            file >> s;
-        }
-
-        file.close();
-        s.erase(0, 4);
-
-        int id;
-        istringstream(s) >> id;
-
-        return id;
-    }
-
-    int checkFile(string attempt, const char* p_fileName)
-    {
-        string line;
-        fstream file;
-
-        string currentChar;
-        long long eChar;
-
-        file.open(p_fileName, ios::in);
-
-        while(1)
-        {
-            file >> currentChar;
-            if(currentChar.find("#ID:") != string::npos)
-            {
-                if(attempt == line)
-                {
-                    file.close();
-                    currentChar.erase(0, 4);
-                    int id;
-                    istringstream(currentChar) >> id;
-                    return id;
-                }
-                else
-                {
-                    line.erase(line.begin(), line.end());
-                }
-            }
-            else
-            {
-                istringstream(currentChar) >> eChar;
-                line += (char)decrypt(eChar);
-                currentChar = "";
-            }
-
-            if(file.peek() == EOF)
-            {
-                file.close();
-                return 0;
-            }
-        }
-    }
-
-    void saveFile(string p_line, const char* p_fileName, const int& id)
-    {
-        fstream file;
-        file.open(p_fileName, ios::app);
-        file.seekg(0, ios::end);
-
-        if(file.tellg() != 0)
-            file << "\n";
-
-        file.seekg(0, ios::beg);
-
-        for(int i = 0; i < p_line.length(); i++)
-        {
-            file << encrypt(p_line[i]);
-            file << "\n";
-        }
-
-        file << "#ID:" << id;
-        file.close();
-    }
-
-    long long encrypt(int p_letter)
-    {
-        return powf(p_letter, 5) * 4 - 14;
-    }
-    int decrypt(long long p_letter)
-    {
-        return powf((p_letter + 14) / 4, 1/5.f);
-    }
-
-private:
-    string userNameAttempt;
-    string passwordAttempt;
-    bool accessGranted;
-};
+void login();
+void register_user();
+void main_menu();
 
 int main()
 {
-    LoginManager app;
-    app.login();
-    cin.get();
+    main_menu();
 }
- */
+
+template <typename T>
+T get_input(const std::string& strQuery)
+{
+    std::cout << strQuery << "\n> ";
+    T out = T();
+
+    while (!(std::cin >> out)) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits <std::streamsize>::max(), '\n');
+        std::cout << "Error!" "\n";
+        std::cout << strQuery << "\n> ";
+    }
+
+    return out;
+}
+
+std::string get_password()
+{
+    std::string password1 = get_input <std::string>("Please enter your password.");
+    std::string password2 = get_input <std::string>("Please re-enter your password.");
+
+    while (password1 != password2) {
+        std::cout << "Error! Passwords do not match." "\n";
+        password1 = get_input <std::string>("Please enter your password.");
+        password2 = get_input <std::string>("Please re-enter your password.");
+    }
+
+    return password1;
+}
+
+std::string get_username()
+{
+    std::string username = get_input <std::string>("Please enter a username.");
+    std::cout << "Username: \"" << username << "\"\n";
+
+    while (get_input <int>("Confirm? [0|1]") != 1) {
+        username = get_input <std::string>("Please enter a username.");
+        std::cout << "Username: \"" << username << "\"\n";
+    }
+
+    return username;
+}
+
+void login()
+{
+    std::cout << "You are being logged in!" "\n";
+}
+
+void main_menu()
+{
+    int choice = get_input <int>(
+            "Hello, Would you like to log in or register?" "\n"
+            "[1] Login" "\n"
+            "[2] Register" "\n"
+            "[3] Exit");
+
+    switch (choice)
+    {
+        case 1:
+            login();
+            break;
+        case 2:
+            register_user();
+            break;
+    }
+}
+
+void register_user()
+{
+    std::string username = get_username();
+    std::string password = get_password();
+    save_user(username, password);
+}
+
+void save_user(const std::string& username, const std::string& password)
+{
+    std::string filename = username + ".txt";
+    std::ofstream file(filename);
+    file << password << "\n";
+}
