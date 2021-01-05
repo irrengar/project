@@ -6,7 +6,7 @@
 #include <fstream>
 #include <map>
 #include "Event.h"
-#include "Menu.h"
+//#include "Menu.h"
 
 using namespace std;
 
@@ -69,12 +69,12 @@ int main() {
 
     fin.close();
 
-    Menu newMenu = Menu(container);
+    //Menu newMenu = Menu(container);
 
     //menuChoice = 0;
 
     //while (menuChoice != 4) {
-    newMenu.start();
+    //newMenu.start();
 
     //cout << menuChoice << endl;
     //}
