@@ -11,7 +11,7 @@ void save_user(const std::string& username, const std::string& password);
 void login();
 
 int main() {
-
+    main_menu();
 }
 template <typename T>
 T  get_input(const std::string& strQuery) {
@@ -47,8 +47,26 @@ std::string get_username()
         username = get_input <std::string>("Please enter a username.");
         std::cout << "Username: \"" << username << "\"\n";
 }
-    
+
     void login()
     {
         std::cout << "You are being logged in!" "\n";
     }
+void main_menu()
+{
+    int choice = get_input <int>(
+        "Hello, Would you like to log in or register?" "\n"
+        "[1] Login" "\n"
+        "[2] Register" "\n"
+        "[3] Exit");
+
+    switch (choice)
+    {
+    case 1:
+        login();
+        break;
+    case 2:
+        register_user();
+        break;
+    }
+}
