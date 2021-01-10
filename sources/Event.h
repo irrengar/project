@@ -20,8 +20,8 @@ public:
 	~Event();
 	Event(string title, int day, MONTH month, int year, int hour, int minutes, string descript, string stabilize);
 
-	void displayEvent();
-	void displayEvent(ofstream &fout);
+	void showMenu();
+	void writeEvent(ofstream &fout);
 	void editTitle(string newTitle);
 	void editDate(int day, MONTH month, int year, int hour, int minutes);
 	void editDescript(string descript);
