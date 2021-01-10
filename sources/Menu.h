@@ -7,6 +7,7 @@
 #include <string>
 #include <ctime>
 #include <map>
+#include "Reminder.h"
 #include "Event.h"
 
 using namespace std;
@@ -20,6 +21,7 @@ private:
 	mmap container;
 public:
 	Menu(mmap newContainer);
+	Menu();
 	~Menu();
 	void start();
 };
