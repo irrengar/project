@@ -23,7 +23,7 @@ Event::Event(string newTitle, int day, MONTH month, int year, int hour, int minu
     done = newStabilize;
 }
 
-void Event::displayEvent(ofstream &fout) {
+void Event::writeEvent(ofstream &fout) {
     fout << title << endl;
     fout << description << endl;
     fout << done << endl;
@@ -34,6 +34,24 @@ void Event::displayEvent(ofstream &fout) {
     fout << date.tm_year << endl;
 }
 
+void Event::showMenu() {
+    //fin >> title;
+    cout << title << endl;
+    //fin >> description;
+    cout << description << endl;
+    //fin >> done;
+    cout << done << endl;
+    //fin >> date.tm_hour;
+    cout << date.tm_hour << endl;
+    //fin >> date.tm_min;
+    cout << date.tm_min << endl;
+    //fin >> date.tm_mon;
+    cout << MONTH(date.tm_mon) << endl;
+    //fin >> date.tm_mday;
+    cout << date.tm_mday << endl;
+    //fin >> date.tm_year;
+    cout << date.tm_year << endl;
+}
 void Event::editTitle(string newTitle) {
     title = newTitle;
 }
